@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional
 import jwt
+import uuid
 from passlib.context import CryptContext
 from .config import settings
 
@@ -19,11 +20,12 @@ def create_access_token(subject: str, expires_delta: Optional[timedelta] = None)
     to_encode.update({"exp": expire, "iat": now})
     return jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 
-def create_refresh_token(subject: str, expires_delta: Optional[timedelta] = None) -> str:
+def create_refresh_token(subject: str, token_id: Optional[str] = None, expires_delta: Optional[timedelta] = None) -> str:
     now = datetime.utcnow()
     expire = now + (expires_delta or timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS))
-    to_encode = {"sub": subject, "exp": expire, "iat": now, "type": "refresh"}
-    return jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+    jti = token_id or str(uuid.uuid4())
+    to_encode = {"sub": subject, "exp": expire, "iat": now, "type": "refresh", "jti": jti}
+    return jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM), jti
 
 def decode_token(token: str) -> dict:
     return jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])
