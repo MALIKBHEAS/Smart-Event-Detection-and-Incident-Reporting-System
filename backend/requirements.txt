@@ -1,0 +1,37 @@
+# Runtime dependencies for the FastAPI backend.
+#
+# Versions are pinned to minimums verified compatible together during
+# development/testing. YOLO inference (ultralytics + torch) IS included
+# below -- app/plugins/cv/yolo_detector.py uses it for real detection.
+# GPU is never required: torch.cuda.is_available() is checked at runtime
+# and CPU is used automatically when no CUDA device is present. In Docker,
+# docker/backend.Dockerfile installs the CPU-only torch wheel explicitly
+# (much smaller than the default CUDA wheel) before this file is processed.
+
+fastapi>=0.115,<0.142
+uvicorn[standard]>=0.32,<0.53
+sqlalchemy>=2.0,<2.1
+pydantic>=2.10,<2.14
+pydantic-settings>=2.7,<2.15
+alembic>=1.14,<1.19
+psycopg2-binary>=2.9,<3.0
+python-multipart>=0.0.9,<0.1
+opencv-python-headless>=4.9,<5.0
+numpy>=1.26
+pyjwt>=2.7,<3.0
+bcrypt>=4.0,<5.0
+email-validator>=2.0,<3.0
+reportlab>=4.0,<5.0
+psutil>=5.9,<8.0
+
+# Real YOLO inference (CPU by default; GPU used automatically if a CUDA
+# device is present via torch.cuda.is_available(), never required -- see
+# app/plugins/cv/yolo_detector.py). ~2GB combined; torch is the biggest
+# runtime dependency in this project by a wide margin.
+ultralytics>=8.2,<9.0
+torch>=2.2
+torchvision>=0.17
+
+# Audio Intelligence (AED)
+av>=12.0.0
+tensorflow-cpu>=2.15.0

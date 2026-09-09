@@ -1,0 +1,15 @@
+{
+    "Codegeex.RepoIndex": true,
+    "python-envs.pythonProjects": [
+        {
+            "path": "backend/app/providers",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        },
+        {
+            "path": ".github/workflows",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        }
+    ]
+}

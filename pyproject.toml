@@ -1,0 +1,36 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [
+  ".venv",
+  "venv",
+  "env",
+  "build",
+  "dist",
+  ".git",
+  "backend/alembic",
+  "**/model_weights",
+  "**/weights",
+  "**/__pycache__",
+]
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "I"]
+ignore = ["E501", "E402", "E731", "E712", "E741", "W293", "F841", "F821"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.12"
+strict_optional = true
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+disallow_untyped_defs = false
+check_untyped_defs = false
+# Only type-check the backend package by default
+files = ["backend"]
+# Exclude alembic migrations and generated/test files from mypy
+exclude = '(^backend/alembic/|^backend/alembic/versions/|^tests/|/\.venv/|/venv/)'

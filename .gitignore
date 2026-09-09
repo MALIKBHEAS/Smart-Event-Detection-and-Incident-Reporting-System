@@ -1,0 +1,26 @@
+# Node dependencies
+node_modules/
+dist/
+build/
+.npm/
+
+# Python dependencies
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Environments
+.env
+.env.local
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# OS specific
+.DS_Store
+Thumbs.db
